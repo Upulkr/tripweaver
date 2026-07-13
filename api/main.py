@@ -17,7 +17,10 @@ from prisma import Prisma
 app = FastAPI(title="TripWeaver AI API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # For development
+    allow_origins=[
+        "http://localhost:3000",
+        "https://tripweaver-six.vercel.app"
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
