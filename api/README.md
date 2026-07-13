@@ -1,3 +1,14 @@
+---
+title: TripWeaver Backend
+emoji: ✈️
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 4.40.0
+app_file: app.py
+pinned: false
+---
+
 # TripWeaver API Backend
 
 The backend of TripWeaver is a robust, agentic AI service built with Python, FastAPI, LangGraph, and the Model Context Protocol (MCP).
