@@ -1,0 +1,12 @@
+[project]
+name = "tripweaver"
+version = "0.1.0"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "langgraph",
+    "langchain-google-genai",
+    "pydantic-settings",
+    "python-dotenv",
+    "httpx"
+]

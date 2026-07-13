@@ -1,0 +1,49 @@
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "sync"
+  recursive_type_depth = 5
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model HotelBooking {
+  id               String   @id @default(cuid())
+  clerkUserId      String   // Will store the Clerk ID (e.g., "user_2xyz...")
+  hotelName        String   // Storing the external string, no foreign key
+  guestName        String
+  checkIn          String
+  checkOut         String
+  confirmationCode String   @unique
+  createdAt        DateTime @default(now())
+}
+
+model FlightBooking {
+  id               String   @id @default(cuid())
+  clerkUserId      String   // Will store the Clerk ID
+  flightId         String   // External Convex ID (e.g., "CA2264"), no foreign key
+  passengerName    String
+  confirmationCode String   @unique
+  createdAt        DateTime @default(now())
+}
+
+model Thread {
+  id          String        @id @default(cuid())
+  clerkUserId String
+  title       String        @default("New Chat")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  messages    ChatMessage[]
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  threadId  String
+  thread    Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  role      String   // "user" | "assistant"
+  content   String
+  createdAt DateTime @default(now())
+}
