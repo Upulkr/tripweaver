@@ -7,7 +7,7 @@ import json
 from fastapi import FastAPI, HTTPException, Query, Request
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
-from sse_starlette.sse import EventSourceResponse
+from fastapi.responses import StreamingResponse
 
 from app.agents.graph import compiled_graph as agent_app
 from fastapi.middleware.cors import CORSMiddleware
@@ -136,7 +136,7 @@ async def chat_stream(request: Request):
                     content = event["data"]["chunk"].content
                     if content and isinstance(content, str):
                         full_response += content
-                        yield json.dumps({'token': content})
+                        yield f"data: {json.dumps({'token': content})}\n\n"
                         await asyncio.sleep(0)
                         
             # In case the model didn't stream properly (some tools etc), we can fallback to full result
@@ -162,13 +162,13 @@ async def chat_stream(request: Request):
                     data={"title": new_title}
                 )
 
-            yield json.dumps({'done': True, 'full_reply': full_response})
+            yield f"data: {json.dumps({'done': True, 'full_reply': full_response})}\n\n"
 
         except asyncio.CancelledError:
             print("Client disconnected.")
             raise
         except Exception as e:
             print(f"Error during stream: {e}")
-            yield json.dumps({'error': str(e)})
+            yield f"data: {json.dumps({'error': str(e)})}\n\n"
 
-    return EventSourceResponse(event_generator())
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
