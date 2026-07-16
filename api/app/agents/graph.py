@@ -18,7 +18,7 @@ def router_edge(state: Dict[str, Any], config: RunnableConfig) -> str:
         if not ai_messages:
             thread_id = config.get("configurable", {}).get("thread_id")
             if thread_id:
-                from prisma import Prisma
+                from prisma_client import Prisma
                 db = Prisma()
                 if not db.is_connected():
                     db.connect()

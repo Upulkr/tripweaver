@@ -5,7 +5,7 @@ import urllib.request
 import urllib.parse
 from typing import Optional
 from mcp.server.fastmcp import FastMCP
-from prisma import Prisma
+from prisma_client import Prisma
 
 # 1. Initialize the standalone MCP Server
 mcp = FastMCP("TripWeaver-Convex-Services")

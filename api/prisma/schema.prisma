@@ -3,6 +3,7 @@ generator client {
   interface            = "sync"
   recursive_type_depth = 5
   binaryTargets        = ["native", "rhel-openssl-3.0.x", "rhel-openssl-1.0.x"]
+  output               = "../prisma_client"
 }
 
 datasource db {

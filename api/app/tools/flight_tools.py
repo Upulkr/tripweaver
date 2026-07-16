@@ -1,6 +1,6 @@
 import random
 from langchain_core.tools import tool
-from prisma import Prisma
+from prisma_client import Prisma
 
 # Initialize and connect the Prisma client
 db = Prisma()

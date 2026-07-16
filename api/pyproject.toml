@@ -13,3 +13,6 @@ dependencies = [
     "mcp",
     "prisma"
 ]
+
+[tool.vercel]
+entrypoint = "main:app"

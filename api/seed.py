@@ -1,4 +1,4 @@
-from prisma import Prisma
+from prisma_client import Prisma
 
 def seed_database():
     db = Prisma()

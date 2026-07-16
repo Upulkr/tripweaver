@@ -15,7 +15,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app.agents.graph import compiled_graph as agent_app
 from fastapi.middleware.cors import CORSMiddleware
-from prisma import Prisma
+from prisma_client import Prisma
 
 # Initialize the FastAPI web server
 app = FastAPI(title="TripWeaver AI API")
