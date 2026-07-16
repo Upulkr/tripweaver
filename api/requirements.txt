@@ -6,3 +6,5 @@ mcp
 prisma
 python-dotenv
 sse-starlette
+gradio
+spaces
