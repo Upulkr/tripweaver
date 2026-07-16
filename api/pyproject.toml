@@ -8,5 +8,8 @@ dependencies = [
     "langchain-google-genai",
     "pydantic-settings",
     "python-dotenv",
-    "httpx"
+    "httpx",
+    "langchain-groq",
+    "mcp",
+    "prisma"
 ]
