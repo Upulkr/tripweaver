@@ -9,6 +9,10 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from fastapi.responses import StreamingResponse
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from app.agents.graph import compiled_graph as agent_app
 from fastapi.middleware.cors import CORSMiddleware
 from prisma import Prisma
