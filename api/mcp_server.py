@@ -12,7 +12,6 @@ mcp = FastMCP("TripWeaver-Convex-Services")
 
 # 2. Connect to the Supabase Database
 db = Prisma()
-db.connect()
 
 BASE_URL = "https://standing-fish-574.convex.site"
 
@@ -74,6 +73,9 @@ def book_flight(flight_id: str, passenger_name: str) -> str:
 
     clerk_user_id = os.getenv("CLERK_USER_ID", "user_test_123")
 
+    if not db.is_connected():
+        db.connect()
+
     db.flightbooking.create(
         data={
             "clerkUserId": clerk_user_id,
@@ -130,6 +132,9 @@ def book_hotel(hotel_name: str, guest_name: str, check_in: str, check_out: str) 
     confirmation = "HTL-" + "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", k=6))
 
     clerk_user_id = os.getenv("CLERK_USER_ID", "user_test_123")
+
+    if not db.is_connected():
+        db.connect()
 
     db.hotelbooking.create(
         data={

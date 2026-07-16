@@ -11,32 +11,27 @@ import os
 
 async def call_mcp_tool(tool_name: str, tool_args: dict, clerk_user_id: str) -> str:
     """
-    Establishes a runtime stdio connection to the standalone MCP server.
+    Directly calls the functions in mcp_server.py to bypass Vercel serverless restrictions
+    on subprocesses and MCP Stdio overhead.
     """
-    env = os.environ.copy()
     if clerk_user_id:
-        env["CLERK_USER_ID"] = clerk_user_id
-
-    # Resolve absolute path to mcp_server.py for Vercel Serverless
-    mcp_server_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "mcp_server.py")
-    
-    import shutil
-    python_exe = sys.executable or shutil.which("python3") or shutil.which("python") or "python"
-    
-    server_params = StdioServerParameters(
-        command=python_exe,
-        args=[mcp_server_path],
-        env=env
-    )
+        os.environ["CLERK_USER_ID"] = clerk_user_id
 
     try:
-        async with stdio_client(server_params) as (read_stream, write_stream):
-            async with ClientSession(read_stream, write_stream) as session:
-                await session.initialize()
-                print(f"[MCP CLIENT] Dispatched request to remote server -> {tool_name}")
-                response = await session.call_tool(tool_name, arguments=tool_args)
-                return response.content[0].text
-
+        import mcp_server
+        print(f"[MCP CLIENT] Dispatched direct call to -> {tool_name}")
+        
+        if tool_name == "search_hotels":
+            return mcp_server.search_hotels(**tool_args)
+        elif tool_name == "book_hotel":
+            return mcp_server.book_hotel(**tool_args)
+        elif tool_name == "search_flights":
+            return mcp_server.search_flights(**tool_args)
+        elif tool_name == "book_flight":
+            return mcp_server.book_flight(**tool_args)
+        else:
+            return f"Error: Tool {tool_name} not found."
+            
     except Exception as e:
         print(f"[MCP RESILIENCE] Caught external service failure: {str(e)}")
         return "ERROR: The requested travel service is currently unavailable. Please try again shortly."
