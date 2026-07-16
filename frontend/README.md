@@ -12,10 +12,11 @@ The frontend of TripWeaver is a sleek, modern, and highly interactive user inter
 ## Setup Instructions
 
 ### 1. Environment Variables
-Create a `.env.local` file in this `frontend/` directory with your Clerk API keys:
+Create a `.env.local` file in this `frontend/` directory with your Clerk API keys and backend API URL:
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
 CLERK_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
 ### 2. Install Dependencies

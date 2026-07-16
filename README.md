@@ -33,5 +33,6 @@ The frontend will run on `http://localhost:3000`. Please refer to the `frontend/
 
 ## Deployment
 
-- **Frontend:** Deploy the `frontend` directory to Vercel.
-- **Backend:** Deploy the `api` directory to Koyeb or Fly.io.
+- **Frontend:** Deploy the `frontend` directory to Vercel. Ensure you set the `NEXT_PUBLIC_API_URL` environment variable to point to your deployed backend.
+- **Backend:** Deploy the `api` directory to Vercel using Zero Config (or Koyeb/Fly.io). 
+  - *Vercel Note:* Due to Vercel's Python builder restrictions with Prisma, you should generate the Prisma client locally (`cd api && npx prisma generate`) and commit the `api/prisma_client` directory to your repository before deploying.

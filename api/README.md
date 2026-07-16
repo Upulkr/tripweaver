@@ -15,7 +15,7 @@ The backend of TripWeaver is a robust, agentic AI service built with Python, Fas
 ## Key Technologies
 - **FastAPI**: Serves the REST API and Server-Sent Events (SSE) for streaming the AI chat to the frontend.
 - **LangGraph**: Manages the multi-agent orchestration. A Router agent classifies the user's intent and routes them to specialized `hotel_agent` or `flight_agent` nodes.
-- **Model Context Protocol (MCP)**: Instead of providing the LLM with direct access to local tools, TripWeaver spawns an isolated MCP subprocess (`mcp_server.py`) that executes real-time database queries and live bookings using the official MCP JSON-RPC protocol over standard input/output.
+- **Model Context Protocol (MCP)**: TripWeaver is fully compatible as a standalone MCP server (`mcp_server.py`) using the official MCP JSON-RPC protocol over standard input/output. However, to bypass Vercel's strict Serverless subprocess limitations in production, the AI agents invoke these MCP tools directly via standard Python imports.
 - **Prisma & Supabase**: Handles the persistent storage of chat memory threads, messages, and actual booking confirmations.
 - **Groq & Llama 3.3 70B**: Provides the core reasoning and tool-calling engine for the agents at lightning-fast speeds.
 
