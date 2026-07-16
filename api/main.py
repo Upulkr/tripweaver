@@ -35,6 +35,10 @@ def startup():
 def shutdown():
     db.disconnect()
 
+@app.get("/")
+def read_root():
+    return {"status": "TripWeaver API is running"}
+
 class ThreadCreateRequest(BaseModel):
     clerk_user_id: str
     title: Optional[str] = "New Chat"
