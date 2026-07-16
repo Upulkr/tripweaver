@@ -5,7 +5,7 @@
       "src": "api/main.py",
       "use": "@vercel/python",
       "config": {
-        "buildCommand": "pip install -r requirements.txt && prisma generate"
+        "buildCommand": "python -m prisma generate"
       }
     }
   ],
