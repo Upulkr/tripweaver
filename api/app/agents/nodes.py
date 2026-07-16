@@ -17,9 +17,15 @@ async def call_mcp_tool(tool_name: str, tool_args: dict, clerk_user_id: str) -> 
     if clerk_user_id:
         env["CLERK_USER_ID"] = clerk_user_id
 
+    # Resolve absolute path to mcp_server.py for Vercel Serverless
+    mcp_server_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "mcp_server.py")
+    
+    import shutil
+    python_exe = sys.executable or shutil.which("python3") or shutil.which("python") or "python"
+    
     server_params = StdioServerParameters(
-        command=sys.executable,
-        args=["mcp_server.py"],
+        command=python_exe,
+        args=[mcp_server_path],
         env=env
     )
 
